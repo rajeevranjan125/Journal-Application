@@ -57,4 +57,8 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
    }
+   @GetMapping("/count")
+   public ResponseEntity<?> countOfUsers(){
+   return ResponseEntity.ok( userService.countOfUsers());
+   }
 }
