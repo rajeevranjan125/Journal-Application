@@ -117,7 +117,8 @@ public class JournalEntryControllerV2 {
 //    }
     @GetMapping("/count/{username}")
     public ResponseEntity <Integer> getCountOfJournalEntry(String userName){
-       User user =userService.findByUserName(userName);
-      return ResponseEntity.ok( user.getJournalEntries().size());
+       User user=userService.findByUserName(userName);
+       List <JournalEntry> journalEntries=  user.getJournalEntries();
+       return ResponseEntity.ok(journalEntries.size());
     }
 }
