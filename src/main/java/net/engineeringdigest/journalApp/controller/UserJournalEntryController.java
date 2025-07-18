@@ -21,8 +21,8 @@ public class UserJournalEntryController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers(){
-        return new ResponseEntity<>(userService.findAll(),HttpStatus.OK);
+    public ResponseEntity<?> getAllUsers() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{username}")
@@ -44,28 +44,33 @@ public class UserJournalEntryController {
     }
 
     @DeleteMapping("/{username}{myId}")
-    public ResponseEntity<?> deleteJournalEntryForUsername(@PathVariable ObjectId myId,@PathVariable String username){
-       journalEntryService.deleteById(myId,username);
-       return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteJournalEntryForUsername(@PathVariable ObjectId myId, @PathVariable String username) {
+        journalEntryService.deleteById(myId, username);
+        return ResponseEntity.noContent().build();
     }
-    
-    @PutMapping("/{myId}") //there is no need to take username ,it will use further for authentication
-    public ResponseEntity<?> updateJournalEntryByUsername(@RequestBody JournalEntry journalEntry,@PathVariable String userName,ObjectId myId){
-        JournalEntry oldEntry=journalEntryService.findByiD(myId).orElse(null);
-        if(oldEntry!=null){
+
+    @PutMapping("/{myId}") // there is no need to take username ,it will use further for authentication
+    public ResponseEntity<?> updateJournalEntryByUsername(@RequestBody JournalEntry journalEntry,
+            @PathVariable String userName, ObjectId myId) {
+        JournalEntry oldEntry = journalEntryService.findByiD(myId).orElse(null);
+        if (oldEntry != null) {
             oldEntry.setDate(LocalDateTime.now());
-            oldEntry.setTitle(journalEntry.getTitle()!=null && !journalEntry.getTitle().isEmpty()?journalEntry.getTitle():oldEntry.getTitle());
-            oldEntry.setContent(journalEntry.getContent()!=null && !journalEntry.getContent().isEmpty()?journalEntry.getContent():oldEntry.getContent());
+            oldEntry.setTitle(
+                    journalEntry.getTitle() != null && !journalEntry.getTitle().isEmpty() ? journalEntry.getTitle()
+                            : oldEntry.getTitle());
+            oldEntry.setContent(journalEntry.getContent() != null && !journalEntry.getContent().isEmpty()
+                    ? journalEntry.getContent()
+                    : oldEntry.getContent());
             journalEntryService.saveEntry(oldEntry);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/count/{username}")
-    public ResponseEntity <Integer> getCountOfJournalEntry(String userName){
-       User user=userService.findByUserName(userName);
-       List <JournalEntry> journalEntries=  user.getJournalEntries();
-       return ResponseEntity.ok(journalEntries.size());
+    public ResponseEntity<Integer> getCountOfJournalEntry(String userName) {
+        User user = userService.findByUserName(userName);
+        List<JournalEntry> journalEntries = user.getJournalEntries();
+        return ResponseEntity.ok(journalEntries.size());
     }
 
 }
