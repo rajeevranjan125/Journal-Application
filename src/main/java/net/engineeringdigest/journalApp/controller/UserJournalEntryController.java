@@ -51,7 +51,7 @@ public class UserJournalEntryController {
         oldJournalEntries.setTitle(journalEntry.getTitle()!=null && !journalEntry.getTitle().isEmpty()?journalEntry.getTitle():oldJournalEntries.getTitle());
         oldJournalEntries.setContent(journalEntry.getContent()!=null && !journalEntry.getContent().isEmpty() ? journalEntry.getContent():oldJournalEntries.getContent());
         journalEntryService.saveEntry(oldJournalEntries);
-        return new ResponseEntity<>("updated",HttpStatus.OK);
+        return new ResponseEntity<>("updated sucessfully",HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
