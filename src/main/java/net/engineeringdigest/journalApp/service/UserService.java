@@ -25,8 +25,8 @@ public class UserService {
     public Optional<User> findById(ObjectId id){
         return userRepository.findById(id);
     }
-    public User findByUserName(String userName){
-        return userRepository.findByUserName(userName);
+    public User findByUserName(String username){
+        return userRepository.findByUserName(username);
     }
     public long countOfUsers(){
         return userRepository.count();
