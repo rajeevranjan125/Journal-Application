@@ -62,5 +62,4 @@ public class UserJournalEntryController {
         int size = user.getJournalEntries().size();
         return ResponseEntity.ok(size);
     }
-
 }
