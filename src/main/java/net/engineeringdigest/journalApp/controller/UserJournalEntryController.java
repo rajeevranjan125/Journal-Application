@@ -31,14 +31,14 @@ public class UserJournalEntryController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("{username}")
+    @PostMapping("/{username}")
     public ResponseEntity<JournalEntry> saveEntryForUsername(@RequestBody JournalEntry journalEntry,
             @PathVariable String username) {
         journalEntryService.saveEntry(journalEntry, username);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{username}{myId}")
+    @DeleteMapping("/{username}/{myId}")
     public ResponseEntity<?> deleteJournalEntryForUsername(@PathVariable ObjectId myId, @PathVariable String username) {
         journalEntryService.deleteById(myId, username);
         return ResponseEntity.noContent().build();
