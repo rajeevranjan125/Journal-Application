@@ -19,8 +19,13 @@ public class UserController {
     }
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user){
+       String userName= user.getUserName();
+       User userInDb=userService.findByUserName(userName);
+       if(userInDb==null){
         userService.saveEntry(user);
         return ResponseEntity.ok().build();
+       }
+       return ResponseEntity.badRequest().body("Duplicate users are not allowed");
     }
 
    @PutMapping("/{userName}")

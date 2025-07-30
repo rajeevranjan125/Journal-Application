@@ -10,10 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.bson.types.ObjectId;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 @RestController
 @RequestMapping("/usersJournalEntry")
 public class UserJournalEntryController {
+    private static final Logger logger = LoggerFactory.getLogger(UserJournalEntryController.class);
 
     @Autowired
     private JournalEntryService journalEntryService;
@@ -24,6 +27,7 @@ public class UserJournalEntryController {
     @GetMapping("/{userName}")
     public ResponseEntity<?> journalEntriesOfUsername(@PathVariable String userName) {
         User user = userService.findByUserName(userName);
+        logger.info("username is: {}",userName);
         List<JournalEntry> journalEntries = user.getJournalEntries();
         if (journalEntries != null && !journalEntries.isEmpty()) {
             return ResponseEntity.ok(journalEntries);
