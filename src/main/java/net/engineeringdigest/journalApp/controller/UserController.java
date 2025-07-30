@@ -34,7 +34,7 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
    }
-   @DeleteMapping("{username}")
+   @DeleteMapping("/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username){
         User userInDb=userService.findByUserName(username);
         if(userInDb!=null){
