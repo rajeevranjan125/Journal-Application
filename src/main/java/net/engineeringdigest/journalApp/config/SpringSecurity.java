@@ -19,8 +19,15 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/journal/**").authenticated().anyRequest().permitAll().and().httpBasic();
-        http.csrf().disable();
+        http.authorizeRequests()
+        .antMatchers("/journal/**")
+        .authenticated()
+        .anyRequest()
+        .permitAll()
+        .and()
+        .httpBasic()
+        .and()
+        .csrf().disable();
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
