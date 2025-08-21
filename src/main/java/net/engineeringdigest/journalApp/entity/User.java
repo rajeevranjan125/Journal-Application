@@ -22,4 +22,5 @@ public class User {
     private String password;
     @DBRef //creating a ref in user collection of journalEntries
     private List<JournalEntry> journalEntries =new ArrayList<>();//it takes refernce of all entries in the journalEntries
+    private List <String> roles;
 }
