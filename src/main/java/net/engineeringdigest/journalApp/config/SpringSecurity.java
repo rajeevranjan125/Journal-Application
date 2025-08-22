@@ -35,6 +35,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.userDetailsService(userDetailsService).passwordEncoder( passwordEncoder()); 
     }
+    //Helps to encode the password in Bcrypt form
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
