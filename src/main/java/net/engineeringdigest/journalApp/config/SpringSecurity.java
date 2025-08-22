@@ -31,6 +31,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
         .and()
         .csrf().disable();
     }
+    //uisng configure function from http
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.userDetailsService(userDetailsService).passwordEncoder( passwordEncoder()); 
