@@ -30,7 +30,6 @@ public class JournalEntryService {
         journalEntries.setDate(LocalDateTime.now());
         journalEntryRepository.save(journalEntries);
         user.getJournalEntries().add(journalEntries);
-        user.setUserName(null);
         userService.saveEntry(user);
     }
 

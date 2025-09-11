@@ -66,8 +66,4 @@ public class JournalEntryController {
         }
     }
 
-    @GetMapping("count")
-    public int getCoutOfJournalEntry() {
-        return 0;
-    }
 }
