@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -31,7 +32,6 @@ public class UserJournalEntryController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByUserName(userName);
-        logger.info("username is: {}", userName);
         List<JournalEntry> journalEntries = user.getJournalEntries();
         if (journalEntries != null && !journalEntries.isEmpty()) {
             return ResponseEntity.ok(journalEntries);
@@ -39,26 +39,52 @@ public class UserJournalEntryController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/id/{myId}")
+    public ResponseEntity<?> getJournalEntryById(@PathVariable ObjectId myId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = userService.findByUserName(userName);
+        List<JournalEntry> journalEntry = user.getJournalEntries().stream().filter(x -> x.getId().equals(myId))
+                .collect(Collectors.toList());
+        if (!journalEntry.isEmpty()) {
+            return ResponseEntity.ok(journalEntry);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping
     public ResponseEntity<JournalEntry> saveEntryForUsername(@RequestBody JournalEntry journalEntry) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
-        logger.info("this username is: {}",userName);
         journalEntryService.saveEntry(journalEntry, userName);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{username}/{myId}")
-    public ResponseEntity<?> deleteJournalEntryForUsername(@PathVariable ObjectId myId, @PathVariable String username) {
-        journalEntryService.deleteById(myId, username);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/id/{myId}")
+    public ResponseEntity<?> deleteJournalEntryForUsername(@PathVariable ObjectId myId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = userService.findByUserName(userName);
+        List<JournalEntry> journalEntry = user.getJournalEntries().stream().filter(x -> x.getId().equals(myId))
+                .collect(Collectors.toList());
+        if (!journalEntry.isEmpty()) {
+            journalEntryService.deleteById(myId, userName);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+
     }
 
-    @PutMapping("/id/{myId}") // there is no need to take username ,it will use further for authentication
+    @PutMapping("/id/{myId}")
     public ResponseEntity<?> updateJournalEntryByUsername(@RequestBody JournalEntry journalEntry,
             @PathVariable ObjectId myId) {
-        JournalEntry oldJournalEntries = journalEntryService.findByiD(myId).orElse(null);
-        if (oldJournalEntries != null) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = userService.findByUserName(userName);
+        List<JournalEntry> listOfOldJournalEntries = user.getJournalEntries().stream()
+                .filter(x -> x.getId().equals(myId)).collect(Collectors.toList());
+        if (!listOfOldJournalEntries.isEmpty()) {
+            JournalEntry oldJournalEntries = journalEntryService.findByiD(myId).orElse(null);
             oldJournalEntries.setTitle(
                     journalEntry.getTitle() != null && !journalEntry.getTitle().isEmpty() ? journalEntry.getTitle()
                             : oldJournalEntries.getTitle());

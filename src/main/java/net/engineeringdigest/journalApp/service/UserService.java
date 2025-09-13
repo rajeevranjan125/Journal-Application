@@ -16,11 +16,14 @@ public class UserService {
     private static final PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
-    public void saveEntry(User user){
+    public void saveNewEntry(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER"));
         userRepository.save(user);
     }
+    public void saveEntry(User user){
+        userRepository.save(user);
+    } 
     public List<User> findAll(){
         return userRepository.findAll();
     }
@@ -32,8 +35,5 @@ public class UserService {
     }
     public User findByUserName(String username){
         return userRepository.findByUserName(username);
-    }
-    public long countOfUsers(){
-        return userRepository.count();
     }
 }

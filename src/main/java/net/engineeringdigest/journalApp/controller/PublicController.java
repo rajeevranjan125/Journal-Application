@@ -24,7 +24,7 @@ public class PublicController {
         String userName = user.getUserName();
         User userInDb = userService.findByUserName(userName);
         if (userInDb == null) {
-            userService.saveEntry(user);
+            userService.saveNewEntry(user);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().body("Duplicate users are not allowed");

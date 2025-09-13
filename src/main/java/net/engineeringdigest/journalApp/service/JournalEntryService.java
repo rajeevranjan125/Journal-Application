@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import javax.management.RuntimeErrorException;
+
 import org.slf4j.Logger;
 
 @Service
@@ -49,14 +52,18 @@ public class JournalEntryService {
         journalEntryRepository.deleteById(myIde);
     }
 
+    @Transactional
     public void deleteById(ObjectId myId, String userName) {
-        User user = userService.findByUserName(userName);
-        user.getJournalEntries().removeIf(x -> x.getId().equals(myId));
-        userService.saveEntry(user);
-        journalEntryRepository.deleteById(myId);
-    }
-
-    public long countJournalEntries() {
-        return journalEntryRepository.count();
+        try {
+            User user = userService.findByUserName(userName);
+            boolean removed = user.getJournalEntries().removeIf(x -> x.getId().equals(myId));
+            if (removed) {
+                userService.saveEntry(user);
+                journalEntryRepository.deleteById(myId);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException("An error occured while deleting the entry", e);
+        }
     }
 }
