@@ -2,6 +2,7 @@ package net.engineeringdigest.journalApp.controller;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,26 +16,23 @@ import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
 
 @RestController
-@RequestMapping("/public")
-public class PublicController {
+@RequestMapping("/admin")
+public class AdminController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/createUser")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        String userName = user.getUserName();
-        User userInDb = userService.findByUserName(userName);
-        if (userInDb == null) {
-            userService.saveNewEntry(user);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().body("Duplicate users are not allowed");
-    }
     @GetMapping("all-users")
     public ResponseEntity<?> getUser() {
         List <User> user =userService.findAll();
-        return new ResponseEntity<>(user, HttpStatus.OK);
+       if(user!=null && !user.isEmpty() ){
+        return new ResponseEntity<>(user,HttpStatus.OK);
+       }
+       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @PostMapping("/create-admin-user")
+    public ResponseEntity<?> createAdminUser(@RequestBody User user){
+        userService.saveNewAdmin(user);
+        return ResponseEntity.ok().build();
+    }
 }
