@@ -13,32 +13,44 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private static final PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
-    public void saveNewEntry(User user){
+
+    public boolean saveNewEntry(User user) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void saveNewAdmin(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
+        user.setRoles(Arrays.asList("USER", "ADMIN"));
         userRepository.save(user);
     }
-     public void saveNewAdmin(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER","ADMIN"));
+
+    public void saveEntry(User user) {
         userRepository.save(user);
     }
-    public void saveEntry(User user){
-        userRepository.save(user);
-    } 
-    public List<User> findAll(){
+
+    public List<User> findAll() {
         return userRepository.findAll();
     }
-    public void deleteById(ObjectId id){
+
+    public void deleteById(ObjectId id) {
         userRepository.deleteById(id);
     }
-    public Optional<User> findById(ObjectId id){
+
+    public Optional<User> findById(ObjectId id) {
         return userRepository.findById(id);
     }
-    public User findByUserName(String username){
+
+    public User findByUserName(String username) {
         return userRepository.findByUserName(username);
     }
 }
