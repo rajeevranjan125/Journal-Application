@@ -31,10 +31,16 @@ public class PublicController {
         }
         return ResponseEntity.badRequest().body("Duplicate users are not allowed");
     }
+
     @GetMapping("all-users")
     public ResponseEntity<?> getUser() {
-        List <User> user =userService.findAll();
+        List<User> user = userService.findAll();
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/health-check")
+    public String healthCheck() {
+        return "all-ok";
     }
 
 }
