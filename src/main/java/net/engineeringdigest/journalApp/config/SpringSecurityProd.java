@@ -14,17 +14,14 @@ import net.engineeringdigest.journalApp.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-public class SpringSecurity extends WebSecurityConfigurerAdapter {
+public class SpringSecurityProd extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        .antMatchers("/admin/**").hasRole("ADMIN")
-        .antMatchers("/users/**","/usersJournalEntry/**")
-        .authenticated()
         .anyRequest()
-        .permitAll()
+        .authenticated() 
         .and()
         .httpBasic()  
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
