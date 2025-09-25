@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import net.engineeringdigest.journalApp.service.UserDetailsServiceImpl;
 
-@Profile("dev")
+@Profile("prod")
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityProd extends WebSecurityConfigurerAdapter {

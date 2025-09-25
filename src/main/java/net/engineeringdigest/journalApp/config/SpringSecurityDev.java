@@ -15,7 +15,7 @@ import net.engineeringdigest.journalApp.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-@Profile("prod")
+@Profile("dev")
 public class SpringSecurityDev extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
