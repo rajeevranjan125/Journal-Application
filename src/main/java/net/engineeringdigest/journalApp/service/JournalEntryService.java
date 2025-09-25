@@ -9,15 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
 
 import org.slf4j.Logger;
 
 @Service
+@Slf4j
 public class JournalEntryService {
     private static final Logger logger = LoggerFactory.getLogger(JournalEntryService.class);
     @Autowired
@@ -29,6 +31,11 @@ public class JournalEntryService {
     @Transactional
     public void saveEntry(JournalEntry journalEntries, String username) {
 
+        log.error(username);
+        log.warn(username);
+        log.debug(username);
+        log.trace(username);
+        logger.info(username);
         User user = userService.findByUserName(username);
         journalEntries.setDate(LocalDateTime.now());
         journalEntryRepository.save(journalEntries);
