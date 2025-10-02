@@ -20,7 +20,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("all-users")
+    @GetMapping("/all-users")
     public ResponseEntity<?> getUser() {
         List <User> user =userService.findAll();
        if(user!=null && !user.isEmpty() ){

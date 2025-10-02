@@ -8,6 +8,9 @@ server:
   port: 8081
   servlet:
     context-path: /dev-journal
-logging:
-  level:
-    net.engineeringdigest.journalApp.service.JournalEntryService: trace
+# logging:
+#   level:
+#     net.engineeringdigest.journalApp.service.JournalEntryService: trace
+# logging:
+#   level:
+#     root: trace
