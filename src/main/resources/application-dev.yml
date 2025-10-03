@@ -14,3 +14,6 @@ server:
 # logging:
 #   level:
 #     root: trace
+weather:
+  api:
+    key: 1744e83be6b4903862b43b9a9b764498

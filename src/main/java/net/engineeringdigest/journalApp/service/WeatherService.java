@@ -3,6 +3,7 @@ package net.engineeringdigest.journalApp.service;
 import java.net.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 
 @Service
 public class WeatherService {
-    private static final String apiKey = "1744e83be6b4903862b43b9a9b764498";
+    @Value("${weather.api.key}")
+    private String apiKey;
     private static final String API = "http://api.weatherstack.com/current ? access_key = API_KEY & query = CITY";
 
     @Autowired
@@ -27,7 +29,7 @@ public class WeatherService {
         WeatherResponse body = response.getBody();
         return body;
         // How to Consume External POST APIs Effectively
-        
+
     //    HttpHeaders httpHeaders = new HttpHeaders();
     //    httpHeaders.set("key":"value");
     //    User user= User.builder().username("mohan").password("mohan").build();
