@@ -12,18 +12,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import net.engineeringdigest.journalApp.api.response.WeatherResponse;
+import net.engineeringdigest.journalApp.cache.AppCache;
 
 @Service
 public class WeatherService {
     @Value("${weather.api.key}")
     private String apiKey;
-    private static final String API = "http://api.weatherstack.com/current ? access_key = API_KEY & query = CITY";
 
+    @Autowired
+    private AppCache appCache;
     @Autowired
     private RestTemplate restTemplate;
 
     public WeatherResponse getWeather(String city) {
-        String finalAPI = API.replaceAll("API_KEY", apiKey).replace("CITY", city);
+        String finalAPI = appCache.AAP_CACHE.get("weather_api").replaceAll("<apiKey>", apiKey).replace("<city>", city);
         ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null,
                 WeatherResponse.class);
         WeatherResponse body = response.getBody();
