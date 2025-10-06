@@ -25,7 +25,7 @@ public class WeatherService {
     private RestTemplate restTemplate;
 
     public WeatherResponse getWeather(String city) {
-        String finalAPI = appCache.AAP_CACHE.get("weather_api").replaceAll("<apiKey>", apiKey).replace("<city>", city);
+        String finalAPI = appCache.aapCache.get(AppCache.keys.WEATHER_API.toString()).replaceAll("<apiKey>", apiKey).replace("<city>", city);
         ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null,
                 WeatherResponse.class);
         WeatherResponse body = response.getBody();
@@ -38,6 +38,5 @@ public class WeatherService {
     //    HttpEntity<User> httpEntity=new HttpEntity<>(user,httpHeaders);
     //     ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.POST, httpEntity,
     //             WeatherResponse.class);
-
     }
 }
