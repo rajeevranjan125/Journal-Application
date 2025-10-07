@@ -13,22 +13,21 @@ import net.engineeringdigest.journalApp.repository.ConfigJournalAppRepository;
 
 @Component
 public class AppCache {
-    public enum keys{
+    public enum keys {
         WEATHER_API;
     }
 
     @Autowired
     ConfigJournalAppRepository configJournalAppRepository;
 
-    public Map<String,String> aapCache=new HashMap<>();
+    public Map<String, String> aapCache;
 
     @PostConstruct
-    public void init(){
-      List<ConfigJournalAppEntity> all=configJournalAppRepository.findAll();
-      for(ConfigJournalAppEntity configJournalAppEntity:all){
-        aapCache.put(configJournalAppEntity.getKey(),configJournalAppEntity.getValue());
-      }
+    public void init() {
+        aapCache = new HashMap<>();
+        List<ConfigJournalAppEntity> all = configJournalAppRepository.findAll();
+        for (ConfigJournalAppEntity configJournalAppEntity : all) {
+            aapCache.put(configJournalAppEntity.getKey(), configJournalAppEntity.getValue());
+        }
     }
 }
-
-

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.engineeringdigest.journalApp.cache.AppCache;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
 
@@ -17,6 +18,8 @@ import net.engineeringdigest.journalApp.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @Autowired
+    private AppCache appCache;
     @Autowired
     private UserService userService;
 
@@ -32,5 +35,9 @@ public class AdminController {
     public ResponseEntity<?> createAdminUser(@RequestBody User user){
         userService.saveNewAdmin(user);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/clear-app-cache")
+    public void clearAppCache(){
+        appCache.init();
     }
 }
