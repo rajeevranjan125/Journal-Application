@@ -1,7 +1,9 @@
 package net.engineeringdigest.journalApp.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Document(collection = "users")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User {
     @Id
@@ -25,4 +29,6 @@ public class User {
     @DBRef //creating a ref in user collection of journalEntries
     private List<JournalEntry> journalEntries =new ArrayList<>();//it takes refernce of all entries in the journalEntries
     private List <String> roles;
+    private String email;
+    private boolean sentimentAnalysis;
 }
