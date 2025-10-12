@@ -4,6 +4,17 @@ spring:
       uri: mongodb+srv://khushiagnihotri16:Z8yZCDEZ4W2tFLdB@cluster0.vpifjag.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: journaldb
       auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: email@gmail.com
+    password: 
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 server:
   port: 8081
   servlet:
@@ -17,3 +28,4 @@ server:
 weather:
   api:
     key: 1744e83be6b4903862b43b9a9b764498
+
