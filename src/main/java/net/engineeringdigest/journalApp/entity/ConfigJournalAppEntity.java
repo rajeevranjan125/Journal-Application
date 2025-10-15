@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection  ="config_journal_aap")
+@Document(collection  ="config_journal_app")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

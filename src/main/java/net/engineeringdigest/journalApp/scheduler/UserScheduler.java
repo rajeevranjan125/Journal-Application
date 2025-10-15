@@ -6,11 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import net.engineeringdigest.journalApp.cache.AppCache;
 import net.engineeringdigest.journalApp.controller.UserRepositoryImpl;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
@@ -30,10 +28,7 @@ public class UserScheduler {
     @Autowired
     private AppCache appCache;
 
-    // Every Sunday at 9 AM
-    // @Scheduled(cron = "0 0 9 ? * SUN *")
-    // For testing: every 1 minute
-    @Scheduled(cron = "0 0/1 * 1/1 * ? *")
+    @Scheduled(cron = "0 0/1 * * * ?") 
     public void fetchUsersAndSendSAMail() {
         List<User> users = userRepositoryImpl.getUserForSA();
 
@@ -71,7 +66,7 @@ public class UserScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0/5 * 1/1 * ? *")
+    @Scheduled(cron = "0 0/1 * * * ?") 
     public void clearAppCache() {
         appCache.init();
     }

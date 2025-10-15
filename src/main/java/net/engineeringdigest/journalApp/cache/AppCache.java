@@ -1,18 +1,23 @@
 package net.engineeringdigest.journalApp.cache;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 import net.engineeringdigest.journalApp.entity.ConfigJournalAppEntity;
 import net.engineeringdigest.journalApp.repository.ConfigJournalAppRepository;
 
 @Component
+@Slf4j
 public class AppCache {
+    
+
     public enum keys {
         WEATHER_API;
     }
@@ -30,4 +35,5 @@ public class AppCache {
             aapCache.put(configJournalAppEntity.getKey(), configJournalAppEntity.getValue());
         }
     }
+
 }

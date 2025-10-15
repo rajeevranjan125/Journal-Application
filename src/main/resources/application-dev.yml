@@ -27,5 +27,5 @@ server:
 #     root: trace
 weather:
   api:
-    key: 1744e83be6b4903862b43b9a9b764498
+    key: a4b8706c6f8bf4f3b2ee17f89b2c45f1
 
